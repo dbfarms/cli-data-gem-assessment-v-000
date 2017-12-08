@@ -1,5 +1,3 @@
-require "./fakenews/version"
-
-module Fakenews
-  # Your code goes here...
-end
+require_relative "./fakenews/version"
+require_relative "./fakenews/news"
+require_relative "./fakenews/cli"
