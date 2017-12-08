@@ -1,0 +1,4 @@
+#!/usr/bin/env ruby
+
+FindAShow::CLI.new.call
+#class called CLI that's being intstiated and then #call method called
