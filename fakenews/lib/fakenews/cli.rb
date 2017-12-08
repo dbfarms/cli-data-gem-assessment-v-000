@@ -2,34 +2,49 @@
 class Fakenews::CLI
 
   def call
-    list_news
     menu
     goodbye
   end
 
-  def list_news
-    puts "today's fake news:"
-    @news = Fakenews::News.today #or today? or what?
-    @news.each.with_index(1) do |news, i|
-      puts "#{i}. #{news}"
-    end
-  end
-
   def menu
-    puts "pick a topic or maybe a day we'll see "
+
     input = nil
     while input != "exit"
+
+      puts "pick a trend in fake(?) news: "
+      puts "1. #fakenews"
+      puts "2. #wakeup"
+      puts "3. pick your own"
+      puts "exit to exit"
+
       input = gets.strip.downcase
+      array = []
 
       if input.to_i > 0
-        puts @news[input.to_i-1]
+        if input.to_i == 1
+          array = Fakenews::News.scrape_fakenews
+          array.each.with_index(1) do |t, i|
+            p "#{i}. #{t} \n"
+          end
+        elsif input.to_i == 2
+          array = Fakenews::News.scrape_wakeup
+          array.each.with_index(1) do |t, i|
+            p "#{i}. #{t} \n"
+          end
+        elsif input.to_i == 3
+          puts "see if keyword is a trend:"
+          input = gets.strip.downcase
+          array = Fakenews::News.scrape_user_input(input)
+          array.each.with_index(1) do |t, i|
+            p "#{i}. #{t} \n"
+          end
+        end
       elsif input == "list"
         list_news
       else
         puts "try again"
       end
     end
-
   end
 
   def goodbye
