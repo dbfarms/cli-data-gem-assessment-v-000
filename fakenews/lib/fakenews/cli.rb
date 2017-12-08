@@ -8,7 +8,11 @@ class Fakenews::CLI
   end
 
   def list_news
+    puts "today's fake news:"
     @news = Fakenews::News.today #or today? or what?
+    @news.each.with_index(1) do |news, i|
+      puts "#{i}. #{news}"
+    end
   end
 
   def menu
@@ -17,6 +21,13 @@ class Fakenews::CLI
     while input != "exit"
       input = gets.strip.downcase
 
+      if input.to_i > 0
+        puts @news[input.to_i-1]
+      elsif input == "list"
+        list_news
+      else
+        puts "try again"
+      end
     end
 
   end
