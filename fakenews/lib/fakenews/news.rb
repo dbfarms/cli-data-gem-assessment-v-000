@@ -7,8 +7,10 @@ class Fakenews::News
     text = doc.search("div.js-tweet-text-container").text
     text_array = text.split("\n\n")
     text_array.delete("")
+    doc.css("strong.fullname.show-popup-with-id").each_with_index do |handle, index|
 
-    handles = doc.css("strong.fullname.show-popup-with-id").each_with_index {|handle, i| Fakenews::Tweet.new(handle, text[i])}
+      Fakenews::Tweet.new(handle.text, text_array[index])
+    end
     # o handle.name
     # with_index(1) => 1 handle.name
     # Fakenews::Tweet.new(handle, text)
