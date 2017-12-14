@@ -2,7 +2,19 @@ class Fakenews::News
   attr_accessor :topic, :hash, :trend
 
 
-  def self.scrape_fakenews
+  def self.scrape_hashtag(keyword)
+    doc = Nokogiri::HTML(open("https://twitter.com/hashtag/#{keyword}"))
+    text = doc.search("div.js-tweet-text-container").text
+    text_array = text.split("\n\n")
+    text_array.delete("")
+
+    handles = doc.css("strong.fullname.show-popup-with-id").each_with_index {|handle, i| Fakenews::Tweet.new(handle, text[i])}
+    # o handle.name
+    # with_index(1) => 1 handle.name
+    # Fakenews::Tweet.new(handle, text)
+  end
+end
+=begin
     doc = Nokogiri::HTML(open("https://twitter.com/hashtag/fakenews"))
 
     text = doc.search("div.js-tweet-text-container").text

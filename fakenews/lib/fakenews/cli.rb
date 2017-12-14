@@ -22,12 +22,12 @@ class Fakenews::CLI
 
       if input.to_i > 0
         if input.to_i == 1
-          array = Fakenews::News.scrape_fakenews
-          array.each.with_index(1) do |t, i|
-            p "#{i}. #{t} \n"
+          Fakenews::News.scrape_hashtag("fakenews")
+          Fakenews::Tweet.all.each.with_index(1) do |t, i|
+            p "#{i}. #{t.handle}  - #{t.text}\n"
           end
         elsif input.to_i == 2
-          array = Fakenews::News.scrape_wakeup
+          Fakenews::News.scrape_wakeup
           array.each.with_index(1) do |t, i|
             p "#{i}. #{t} \n"
           end
